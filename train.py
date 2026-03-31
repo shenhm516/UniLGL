@@ -72,7 +72,7 @@ def get_args():
     parser = argparse.ArgumentParser(description='UniLGL')
     # parser.add_argument('--mode', type=str, default='train', help='Mode', choices=['train', 'test'])
     
-    parser.add_argument('--batchSize', type=int, default=4, 
+    parser.add_argument('--batchSize', type=int, default=2, 
             help='Number of triplets (query, pos, negs). Each triplet consists of 12 images.')
     parser.add_argument('--cacheBatchSize', type=int, default=1, help='Batch size for caching and testing')
     parser.add_argument('--nEpochs', type=int, default=40, help='number of epochs to train for')
