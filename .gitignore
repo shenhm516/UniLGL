@@ -1,0 +1,14 @@
+*.pyc
+*.npz
+*.pcd
+*.laz
+*.csv
+cache*
+pretrain*
+match_results*
+temp_frames
+runs
+eval.log
+eval_results
+.vscode
+.claude
