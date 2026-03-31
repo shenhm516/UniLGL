@@ -1,0 +1,12 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11", "cmake", "ninja"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "pcd_utils"
+version = "0.0.1"
+
+[tool.scikit-build]
+wheel.install-dir = "pcd_utils"
+build.verbose = true
+logging.level = "INFO"
