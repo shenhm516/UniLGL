@@ -26,7 +26,7 @@ from model.losses import TripletLoss, FocusInfoNCELoss, HardInfoNCELoss
 
 
 import dataset.multi_par_dataset_iou as train_dataset
-from eval_utils.utils_3dof import evaluate_recall
+from eval_utils.utils_3dof import evaluate_pr
 
 eval_datasets_config = [
     ['MCD', ['ntu_night_08', 'ntu_day_02', 'ntu_day_10', 'ntu_night_13']],
@@ -77,7 +77,7 @@ def get_args():
     parser.add_argument('--cacheBatchSize', type=int, default=1, help='Batch size for caching and testing')
     parser.add_argument('--nEpochs', type=int, default=40, help='number of epochs to train for')
     parser.add_argument('--nGPU', type=int, default=1, help='number of GPU to use.')
-    parser.add_argument('--lr', type=float, default=1e-5 * 2, help='Learning Rate.')
+    parser.add_argument('--lr', type=float, default=1e-5, help='Learning Rate.')
     parser.add_argument('--lrStep', type=float, default=10, help='Decay LR ever N steps.')
     parser.add_argument('--lrGamma', type=float, default=0.5, help='Multiply LR by Gamma for decaying.')
     parser.add_argument('--weightDecay', type=float, default=0.001, help='Weight decay for SGD.')
@@ -337,7 +337,7 @@ if __name__ == "__main__":
     else: pass
 
     if opt.test_before_train:
-        evaluate_recall(model, eval_datasets_config, None, None, device)
+        evaluate_pr(model, 'unilpr', eval_datasets_config, None, None, device, **infer_extra_args)
     # preparing tensorboard
     writer = SummaryWriter(log_dir=join(opt.runsPath, datetime.now().strftime('%b%d_%H-%M-%S')))
 
@@ -389,7 +389,7 @@ if __name__ == "__main__":
                 'optimizer' : optimizer.state_dict(),
         }, logdir, epoch)
         
-        mean_recall, _ = evaluate_recall(model, eval_datasets_config, writer, epoch, device, **infer_extra_args)
+        mean_recall, _ = evaluate_pr(model, 'unilpr', eval_datasets_config, writer, epoch, device, **infer_extra_args)
 
         is_best = mean_recall > best_score 
         if is_best:   best_score = mean_recall
